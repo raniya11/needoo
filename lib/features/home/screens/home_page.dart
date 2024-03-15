@@ -488,8 +488,6 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
         ),
-
-        // Other shimmer effects for remaining widgets...
       ],
     );
   }
