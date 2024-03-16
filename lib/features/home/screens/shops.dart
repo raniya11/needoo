@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:food_delivery_app/Apptext.dart';
+import 'package:food_delivery_app/widget/Apptext.dart';
 import 'package:food_delivery_app/core/model/models.dart';
 import 'package:food_delivery_app/core/widgets/slidingbanner.dart';
 import 'package:shared_preferences/shared_preferences.dart';

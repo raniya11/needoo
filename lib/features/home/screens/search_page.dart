@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:food_delivery_app/Apptext.dart';
+import 'package:food_delivery_app/widget/Apptext.dart';
 import 'package:food_delivery_app/core/model/location_data.dart';
 import 'package:food_delivery_app/core/services/location_provider.dart';
 import 'package:geolocator/geolocator.dart';

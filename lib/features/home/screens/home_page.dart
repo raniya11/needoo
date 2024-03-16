@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
-import 'package:food_delivery_app/Apptext.dart';
+import 'package:food_delivery_app/widget/Apptext.dart';
 import 'package:food_delivery_app/core/model/models.dart';
 import 'package:food_delivery_app/core/services/location_provider.dart';
 import 'package:food_delivery_app/core/widgets/category_container.dart';
@@ -45,8 +45,8 @@ class _HomePageState extends State<HomePage> {
     try {
       final phoneNumber = '9785641253';
       setState(() {
-        latitude = position!.latitude;
-        longitude = position!.longitude;
+        latitude = 10.9916;
+        longitude = 76.0103;
       });
 
       final fetchedResponse =
@@ -65,6 +65,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
+
     return Scaffold(
       body: SafeArea(
         child: Container(
@@ -72,8 +73,7 @@ class _HomePageState extends State<HomePage> {
           width: size.width,
           color: Colors.white,
           child:
-              // isLoading
-              //     ? _buildShimmerEffect(size):
+
 
               SingleChildScrollView(
             child: Column(
@@ -147,221 +147,17 @@ class _HomePageState extends State<HomePage> {
                     fw: FontWeight.bold,
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 15.0, right: 15),
-                  child: InkWell(
-                    onTap: () {
-                       Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ShopsPage(
-                                response: response,
-                                title: "Groceries",
-                                keyWord: "Grocery",
-                              )));
+                if (response == null) // Show shimmer if response is null
+                  _buildShimmerCategoryCards(size),
+                if (response != null)
+                  ...response!.shopCategories!.map((category) {
+                    return buildCategoryCard(category, size);
+                  }),
 
-                    },
-                    child: Card(
-                      elevation: 5,
-                      child: Container(
-                        height: size.height * 0.09,
-                        width: size.width,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
-                          color: Colors.white,
-                        ),
-                        child: Stack(
-                          children: [
-                            Align(
-                              alignment: Alignment(-0.92, 0),
-                              child: Container(
-                                height: size.height * 0.06,
-                                width: size.width * 0.13,
-                                decoration: BoxDecoration(
-                                  color: Colors.lightBlue.shade50,
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: Image(
-                                  image: AssetImage("assets/img/groceries.png"),
-                                  fit: BoxFit.fill,
-                                ),
-                              ),
-                            ),
-                            Align(
-                                alignment: Alignment(-0.45, -0.4),
-                                child: AppText(
-                                  text: "Groceries",
-                                  size: 16,
-                                  fw: FontWeight.w600,
-                                )),
-                            Align(
-                                alignment: Alignment(-0.18, 0.3),
-                                child: AppText(
-                                  text: "Groceries and Vegetables",
-                                  size: 14,
-                                  fw: FontWeight.w400,
-                                  color: Colors.black38,
-                                )),
-                            Align(
-                              alignment: Alignment(0.98, 0),
-                              child: Container(
-                                  height: size.height * 0.04,
-                                  width: size.width * 0.1,
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(50)),
-                                  child: Icon(
-                                    Icons.keyboard_arrow_right_rounded,
-                                    size: 30,
-                                  )),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 15.0, right: 15),
-                  child: InkWell(
-                    onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ShopsPage(
-                                  response: response,
-                                  title: "Fish & Meat",
-                                  keyWord: "Fish",
-                                ))),
-                    child: Card(
-                      elevation: 5,
-                      child: Container(
-                        height: size.height * 0.09,
-                        width: size.width,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
-                          color: Colors.white,
-                        ),
-                        child: Stack(
-                          children: [
-                            Align(
-                              alignment: Alignment(-0.92, 0),
-                              child: Container(
-                                height: size.height * 0.06,
-                                width: size.width * 0.13,
-                                decoration: BoxDecoration(
-                                  color: Colors.lightBlue.shade50,
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: Image(
-                                  image: AssetImage("assets/img/fish.png"),
-                                  fit: BoxFit.fill,
-                                ),
-                              ),
-                            ),
-                            Align(
-                                alignment: Alignment(-0.35, -0.4),
-                                child: AppText(
-                                  text: "Fish and Meat",
-                                  size: 16,
-                                  fw: FontWeight.w600,
-                                )),
-                            Align(
-                                alignment: Alignment(-0.12, 0.3),
-                                child: AppText(
-                                  text: "Fresh fish, chicken, meat...",
-                                  size: 14,
-                                  fw: FontWeight.w400,
-                                  color: Colors.black38,
-                                )),
-                            Align(
-                              alignment: Alignment(0.98, 0),
-                              child: Container(
-                                  height: size.height * 0.04,
-                                  width: size.width * 0.1,
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(50)),
-                                  child: Icon(
-                                    Icons.keyboard_arrow_right_rounded,
-                                    size: 30,
-                                  )),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 15.0, right: 15),
-                  child: InkWell(
-                    onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ShopsPage(
-                                  response: response,
-                                  title: "Bakes & Food",
-                                ))),
-                    child: Card(
-                      elevation: 5,
-                      child: Container(
-                        height: size.height * 0.09,
-                        width: size.width,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
-                          color: Colors.white,
-                        ),
-                        child: Stack(
-                          children: [
-                            Align(
-                              alignment: Alignment(-0.92, 0),
-                              child: Container(
-                                height: size.height * 0.06,
-                                width: size.width * 0.13,
-                                decoration: BoxDecoration(
-                                  color: Colors.lightBlue.shade50,
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: Image(
-                                  image: AssetImage("assets/img/burger.png"),
-                                  fit: BoxFit.fill,
-                                ),
-                              ),
-                            ),
-                            Align(
-                                alignment: Alignment(-0.36, -0.4),
-                                child: AppText(
-                                  text: "Bakes & Food",
-                                  size: 16,
-                                  fw: FontWeight.w600,
-                                )),
-                            Align(
-                                alignment: Alignment(-0.12, 0.3),
-                                child: AppText(
-                                  text: "Get delicious bakes & food",
-                                  size: 14,
-                                  fw: FontWeight.w400,
-                                  color: Colors.black38,
-                                )),
-                            Align(
-                              alignment: Alignment(0.98, 0),
-                              child: Container(
-                                  height: size.height * 0.04,
-                                  width: size.width * 0.1,
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(50)),
-                                  child: Icon(
-                                    Icons.keyboard_arrow_right_rounded,
-                                    size: 30,
-                                  )),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+
+
+
+
                 SizedBox(
                   height: size.height * 0.04,
                 ),
@@ -448,47 +244,139 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildShimmerEffect(Size size) {
-    return Column(
-      children: [
-        // Shimmer effect for location widget
-        Shimmer.fromColors(
-          baseColor: Colors.grey[300]!,
-          highlightColor: Colors.grey[100]!,
-          child: Padding(
-            padding: const EdgeInsets.only(top: 50.0, left: 15),
-            child: Row(
+
+
+
+
+  Widget buildCategoryCard(String category, Size size) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 15.0, right: 15),
+      child: InkWell(
+        onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => ShopsPage(
+                  response: response,
+                  title: category,
+                  keyWord: category,
+                ))),
+        child: Card(
+          elevation: 5,
+          child: Container(
+            height: size.height * 0.09,
+            width: size.width,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              color: Colors.white,
+            ),
+            child: Stack(
               children: [
-                Icon(
-                  Icons.location_on_outlined,
-                  color: Colors.green,
+                Align(
+                  alignment: Alignment(-0.92, 0),
+                  child: Container(
+                    height: size.height * 0.06,
+                    width: size.width * 0.13,
+                    decoration: BoxDecoration(
+                      color: Colors.lightBlue.shade50,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    // Image or icon for the category
+                  ),
                 ),
-                SizedBox(
-                  width: size.width * 0.03,
+                Align(
+                    alignment: Alignment(-0.45, -0.4),
+                    child: AppText(
+                      text: category,
+                      size: 16,
+                      fw: FontWeight.w600,
+                    )),
+                Align(
+                    alignment: Alignment(-0.18, 0.3),
+                    child: AppText(
+                      text: "Description for $category",
+                      size: 14,
+                      fw: FontWeight.w400,
+                      color: Colors.black38,
+                    )),
+                Align(
+                  alignment: Alignment(0.98, 0),
+                  child: Container(
+                      height: size.height * 0.04,
+                      width: size.width * 0.1,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(50)),
+                      child: Icon(
+                        Icons.keyboard_arrow_right_rounded,
+                        size: 30,
+                      )),
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      width: size.width * 0.4, // Adjust the width as needed
-                      height: size.height * 0.02,
-                      color: Colors.white, // Same as your background color
-                    ),
-                    SizedBox(
-                      height: size.height * 0.01,
-                    ),
-                    Container(
-                      width: size.width * 0.2, // Adjust the width as needed
-                      height: size.height * 0.01,
-                      color: Colors.white, // Same as your background color
-                    ),
-                  ],
-                )
               ],
             ),
           ),
         ),
-      ],
+      ),
     );
   }
+
+  Widget _buildShimmerCategoryCards(Size size) {
+    List<Widget> shimmerCards = List.generate(
+      3,
+          (index) => Padding(
+        padding: const EdgeInsets.only(left: 15.0, right: 15, bottom: 15),
+        child: Shimmer.fromColors(
+          baseColor: Colors.grey[300]!,
+          highlightColor: Colors.grey[100]!,
+          child: Card(
+            elevation: 5,
+            child: Container(
+              height: size.height * 0.09,
+              width: size.width,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+                color: Colors.white,
+              ),
+              child: Row(
+                children: [
+                  Container(
+                    height: size.height * 0.06,
+                    width: size.width * 0.13,
+                    decoration: BoxDecoration(
+                      color: Colors.lightBlue.shade50,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    // Shimmer effect for the image or icon
+                  ),
+                  SizedBox(width: 10),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        width: size.width * 0.3,
+                        height: size.height * 0.015,
+                        color: Colors.white,
+                      ),
+                      SizedBox(height: 5),
+                      Container(
+                        width: size.width * 0.4,
+                        height: size.height * 0.01,
+                        color: Colors.white,
+                      ),
+                    ],
+                  ),
+                  Spacer(),
+                  Icon(Icons.keyboard_arrow_right_rounded, size: 30),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+
+    return Column(children: shimmerCards);
+  }
+
+
 }

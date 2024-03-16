@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:food_delivery_app/Apptext.dart';
+import 'package:food_delivery_app/widget/Apptext.dart';
 
 class sliding_banner extends StatelessWidget {
   const sliding_banner({
